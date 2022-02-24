@@ -18,7 +18,7 @@ const getAll = async () => {
     );
     return contacts;
   } catch (err) {
-    throw err;
+    throw new Error('Erro no getall do model');
   }
 };
 
@@ -28,7 +28,7 @@ const getAllPhoneNumbers = async () => {
       "SELECT * FROM phone_numbers;"
     );
     return phones;
-  } catch (err) {
+  } catch (new Error) {
     throw err;
   }
 };
