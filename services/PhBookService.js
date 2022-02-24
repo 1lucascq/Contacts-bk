@@ -1,6 +1,5 @@
 const PhBookModel = require('../models/PhBookModel');
 
-
 async function preventDuplications (name, email) {
   const allContacts = await getAll();
   const nameAlreadyExists = allContacts.find((contact) => contact.name.toLowerCase() === name.toLowerCase());
@@ -38,19 +37,19 @@ async function getById(id) {
   }
 }
 
-async function add({ name, email, image }) {
+async function add({ name, email, image, phone }) {
   try {
     await preventDuplications(name, email)
-    return await PhBookModel.add(name, email, image);
+    return await PhBookModel.add(name, email, image, phone);
   } catch (error) {
     throw error;
   }
 };
 
-async function update(id, name, email, image) {
+async function update(id, name, email, image, phone) {
   try {
     await preventDuplications(name, email)
-    return await PhBookModel.update(id, name, email, image);
+    return await PhBookModel.update(id, name, email, image, phone);
   } catch (error) {
     throw error;
   }

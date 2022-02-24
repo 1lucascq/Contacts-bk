@@ -24,8 +24,8 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', ValidateData, async (req, res, next) => {
   try {
-    const { name, email, image } = req.body;
-    const newContact = await PhBookService.add({ name, email, image });
+    const { name, email, image, phone } = req.body;
+    const newContact = await PhBookService.add({ name, email, image, phone });
     return res.status(201).json(newContact);
   } catch (err) {
     return next(err)
@@ -34,8 +34,8 @@ router.post('/', ValidateData, async (req, res, next) => {
 
 router.put('/:id', ValidateData, async (req, res, next) => {
   try {
-    const { name, email, image } = req.body;
-    const contact = await PhBookService.update(req.params.id, name, email, image);
+    const { name, email, image, phone } = req.body;
+    const contact = await PhBookService.update(req.params.id, name, email, image, phone);
     return res.status(200).json(contact);
   } catch (err) {
     return next(err)

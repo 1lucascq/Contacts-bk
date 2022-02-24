@@ -1,11 +1,24 @@
 const connection = require("./connection");
 
-const add = async (name, email, image) => {
+const addPhoneNumber = async (contactId, phone) => {
+  try {
+    const query = `INSERT INTO phone_numbers (contact_id, name) VALUES (?, ?);`;
+    await connection.execute(query, [contactId, phone]);
+
+    return { contactId, phone };
+  } catch (err) {
+    throw new Error('Erro do servidor na adição de novo telefone.');
+  }
+};
+
+const add = async (name, email, image, phone) => {
   try {
     const query = `INSERT INTO contacts (name, email, image) VALUES (?, ?, ?);`;
     const [result] = await connection.execute(query, [name, email, image]);
+    const id = result.insertId;
+    await addPhoneNumber(id, phone);
 
-    return { id: result.insertId, name, email, image };
+    return { id, name, email, image };
   } catch (err) {
     throw new Error('Erro do servidor na adição de novo contato.');
   }
@@ -59,13 +72,23 @@ const getPhoneNumberById = async (id) => {
   }
 };
 
-const update = async (id, name, email, image) => {
+const updatePhoneNumber = async (contactId, phone) => {
   try {
-    await connection.execute(
-      "UPDATE contacts SET name = ?, email = ?, image = ? WHERE id = ?",
-      [name, email, image, id]
-    );
-    return { id, name, email, image };
+    const query = "UPDATE phone_numbers SET phone = ? WHERE contact_id = ?";
+    await connection.execute(query, [phone, contactId]);
+
+    return { contactId, phone };
+  } catch (err) {
+    throw new Error('Erro do servidor na atualização de telefone do model.');
+  }
+};
+
+const update = async (id, name, email, image, phone) => {
+  try {
+    const query = "UPDATE contacts SET name = ?, email = ?, image = ? WHERE id = ?;";
+    await connection.execute(query,[name, email, image, id]);
+    await updatePhoneNumber(id, phone)
+    return { id, name, email, image, phone };
   } catch (err) {
     throw new Error('Erro do servidor na atualização de contato do model.');
   }
