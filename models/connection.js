@@ -10,9 +10,4 @@ const connection = mysql.createPool({
   port: process.env.DB_PORT
 });
 
-// host: process.env.HOST,
-//   user: process.env.DB_USER,
-//   password: process.env.PASSWORD,
-//   database: process.env.DB,
-//   port: process.env.DB_PORT
 module.exports = connection;

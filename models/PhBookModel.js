@@ -7,7 +7,7 @@ const add = async (name, email, image) => {
 
     return { id: result.insertId, name, email, image };
   } catch (err) {
-    throw err;
+    throw new Error('Erro do servidor na adição de novo contato.');
   }
 };
 
@@ -18,7 +18,7 @@ const getAll = async () => {
     );
     return contacts;
   } catch (err) {
-    throw new Error('Erro no getall do model');
+    throw new Error('Erro do servidor na requisição getAll do model.');
   }
 };
 
@@ -29,7 +29,7 @@ const getAllPhoneNumbers = async () => {
     );
     return phones;
   } catch (err) {
-    throw err;
+    throw new Error('Erro do servidor na requisição do getAllPhoneNumbers do model.');
   }
 };
 
@@ -42,7 +42,7 @@ const getById = async (id) => {
     if (!result.length) return null;
     return result[0];
   } catch (err) {
-    throw err;
+    throw new Error('Erro do servidor na requisição getByID do model.');
   }
 };
 
@@ -55,7 +55,7 @@ const getPhoneNumberById = async (id) => {
     if (!phone.length) return null;
     return phone;
   } catch (err) {
-    throw err;
+    throw new Error('Erro do servidor na requisição do getPhoneNumberById do model.');
   }
 };
 
@@ -67,7 +67,7 @@ const update = async (id, name, email, image) => {
     );
     return { id, name, email, image };
   } catch (err) {
-    throw err;
+    throw new Error('Erro do servidor na atualização de contato do model.');
   }
 };
 
@@ -80,7 +80,7 @@ const exclude = async (id) => {
     ]);
     return contact;
   } catch (err) {
-    throw err;
+    throw new Error('Erro do servidor na exclusão de contato do model.');
   }
 };
 
