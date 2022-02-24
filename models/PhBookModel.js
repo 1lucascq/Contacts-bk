@@ -2,7 +2,7 @@ const connection = require("./connection");
 
 const add = async (name, email, image) => {
   try {
-    const query = `INSERT INTO Phone_Book.contacts (name, email, image) VALUES (?, ?, ?);`;
+    const query = `INSERT INTO contacts (name, email, image) VALUES (?, ?, ?);`;
     const [result] = await connection.execute(query, [name, email, image]);
 
     return { id: result.insertId, name, email, image };
@@ -14,7 +14,7 @@ const add = async (name, email, image) => {
 const getAll = async () => {
   try {
     const [contacts] = await connection.execute(
-      "SELECT * FROM Phone_Book.contacts"
+      "SELECT * FROM contacts"
     );
     return contacts;
   } catch (err) {
@@ -25,7 +25,7 @@ const getAll = async () => {
 const getAllPhoneNumbers = async () => {
   try {
     const [phones] = await connection.execute(
-      "SELECT * FROM Phone_Book.phone_numbers;"
+      "SELECT * FROM phone_numbers;"
     );
     return phones;
   } catch (err) {
@@ -36,7 +36,7 @@ const getAllPhoneNumbers = async () => {
 const getById = async (id) => {
   try {
     const [result] = await connection.execute(
-      "SELECT * FROM Phone_Book.contacts WHERE id = ?",
+      "SELECT * FROM contacts WHERE id = ?",
       [id]
     );
     if (!result.length) return null;
@@ -49,7 +49,7 @@ const getById = async (id) => {
 const getPhoneNumberById = async (id) => {
   try {
     const [phone] = await connection.execute(
-      "SELECT * FROM Phone_Book.phone_numbers WHERE contact_id = ?",
+      "SELECT * FROM phone_numbers WHERE contact_id = ?",
       [id]
     );
     if (!phone.length) return null;
@@ -62,7 +62,7 @@ const getPhoneNumberById = async (id) => {
 const update = async (id, name, email, image) => {
   try {
     await connection.execute(
-      "UPDATE Phone_Book.contacts SET name = ?, email = ?, image = ? WHERE id = ?",
+      "UPDATE contacts SET name = ?, email = ?, image = ? WHERE id = ?",
       [name, email, image, id]
     );
     return { id, name, email, image };
@@ -75,7 +75,7 @@ const exclude = async (id) => {
   try {
     const contact = await getById(id);
     if (!contact) return {};
-    await connection.execute("DELETE FROM Phone_Book.contacts WHERE id = ?", [
+    await connection.execute("DELETE FROM contacts WHERE id = ?", [
       id,
     ]);
     return contact;
