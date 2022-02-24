@@ -5,6 +5,7 @@ const PhBookService = require('../services/PhBookService');
 const router = express.Router();
 
 router.get('/', async (_req, res, next) => {
+  console.log('controller - getAll')
   try {
     const contacts = await PhBookService.getAll();
     return res.status(200).json(contacts);    
