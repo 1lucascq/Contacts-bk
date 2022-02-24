@@ -1,6 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 
-module.exports = (err, req, res, _next) => {
+module.exports = (err, _req, res, _next) => {
   if (err.isJoi) {
     console.log('EH Joi')
     return res.status(StatusCodes.BAD_REQUEST).json({ error: { message: err.details[0].message } });
@@ -12,5 +12,5 @@ module.exports = (err, req, res, _next) => {
   }
   
   console.log('EH Generico')
-  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: err.message });
+  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: `${err.message} port é: ${process.env.PORT} e HOST é: ${process.env.HOST}` });
 };
