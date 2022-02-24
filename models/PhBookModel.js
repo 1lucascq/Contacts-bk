@@ -28,7 +28,7 @@ const getAllPhoneNumbers = async () => {
       "SELECT * FROM phone_numbers;"
     );
     return phones;
-  } catch (new Error) {
+  } catch (err) {
     throw err;
   }
 };
