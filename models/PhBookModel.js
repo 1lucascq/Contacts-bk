@@ -86,7 +86,7 @@ const updatePhoneNumber = async (contactId, phone) => {
 const update = async (id, name, email, image, phone) => {
   try {
     const query = "UPDATE contacts SET name = ?, email = ?, image = ? WHERE id = ?;";
-    await connection.execute(query,[name, email, image, id]);
+    await connection.execute(query,[name, email, image, +id]);
     await updatePhoneNumber(id, phone)
     return { id, name, email, image, phone };
   } catch (err) {
