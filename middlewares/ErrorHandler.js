@@ -1,9 +1,9 @@
 const { StatusCodes } = require('http-status-codes');
 
-module.exports = (err, _req, res, _next) => {
+module.exports = (err, req, res, _next) => {
   if (err.isJoi) {
-    console.log('EH Joi')
-    return res.status(StatusCodes.BAD_REQUEST).json({ error: { message: err.details[0].message } });
+    console.log(req.body)
+    return res.status(StatusCodes.BAD_REQUEST).json({ message: { message: err.details[0].message } });
   }
   
   const status = +err.message.slice(0, 3);
@@ -11,6 +11,8 @@ module.exports = (err, _req, res, _next) => {
     return res.status(+err.message.slice(0,3)).json({ message: err.message.slice(4) });
   }
   
-  console.log('EH Generico')
-  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: `${err.message} port é: ${process.env.PORT} e HOST é: ${process.env.HOST}` });
+  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    code: StatusCodes.INTERNAL_SERVER_ERROR,
+    message: err.message
+  });
 };
