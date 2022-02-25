@@ -7,9 +7,8 @@ function ValidateData (req, _res, next) {
     name: Joi.string().not().empty().required(),
     email: Joi.string().not().empty().required(),
     image: Joi.string().not().empty().required(),
-    phone: Joi.string().not().empty().required(),
   })
-    .validate({ name, email, image, phone })
+    .validate({ name, email, image })
   if(error) {
     return next(error)
   }
