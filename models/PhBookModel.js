@@ -2,7 +2,7 @@ const connection = require("./connection");
 
 const addPhoneNumber = async (contactId, phone) => {
   try {
-    const query = `INSERT INTO phone_numbers (contact_id, name) VALUES (?, ?);`;
+    const query = `INSERT INTO phone_numbers (contact_id, phone) VALUES (?, ?);`;
     await connection.execute(query, [contactId, phone]);
 
     return { contactId, phone };
@@ -18,7 +18,7 @@ const add = async (name, email, image, phone) => {
     const id = result.insertId;
     await addPhoneNumber(id, phone);
 
-    return { id, name, email, image };
+    return { id, name, email, image, phone };
   } catch (err) {
     throw new Error('Erro do servidor na adição de novo contato.');
   }
@@ -97,10 +97,12 @@ const update = async (id, name, email, image, phone) => {
 const exclude = async (id) => {
   try {
     const contact = await getById(id);
-    if (!contact) return {};
-    await connection.execute("DELETE FROM contacts WHERE id = ?", [
-      id,
-    ]);
+    if (!contact) throw new Error('404:Id não encontrado! Confira os dados da requisição.');
+    const queryPhone = 'DELETE FROM phone_numbers WHERE contact_id = ?;'
+    const queryContact = 'DELETE FROM contacts WHERE id = ?;'
+
+    await connection.execute(queryPhone, [id]);
+    await connection.execute(queryContact, [id]);
     return contact;
   } catch (err) {
     throw new Error('Erro do servidor na exclusão de contato do model.');
