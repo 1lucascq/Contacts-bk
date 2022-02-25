@@ -48,7 +48,6 @@ async function add({ name, email, image, phone }) {
 
 async function update(id, name, email, image, phone) {
   try {
-    await preventDuplications(name, email)
     return await PhBookModel.update(id, name, email, image, phone);
   } catch (error) {
     throw error;
