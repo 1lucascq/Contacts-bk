@@ -12,13 +12,3 @@ export default mysql.createPool({
   port: Number(process.env.DB_PORT)
 
 });
-
-// const connection = mysql.createPool({
-  // host: "us-cdbr-east-05.cleardb.net",
-  // user: "be99930bd04b0e",
-  // password: "1dceb3a6",
-  // database: "heroku_d099a20d88f2c75",
-  // port: Number(process.env.DB_PORT)
-// });
-
-// module.exports = connection;
