@@ -1,6 +1,8 @@
-const { StatusCodes } = require('http-status-codes');
+import Joi from 'joi';
+import { Request, Response, NextFunction } from 'express';
+import { StatusCodes } from 'http-status-codes';
 
-module.exports = (err, req, res, _next) => {
+export default function ErrorHandler(err: Joi.Err | any, req: Request, res: Response, _next: NextFunction) {
   if (err.isJoi) {
     console.log(req.body)
     return res.status(StatusCodes.BAD_REQUEST).json({ message: { message: err.details[0].message } });

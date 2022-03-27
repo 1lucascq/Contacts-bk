@@ -1,12 +1,12 @@
 {
-  "name": "estagio-betabit",
+  "name": "contacts-bk",
   "version": "1.0.0",
-  "description": "Projeto feito como requisito e inscricao no estagio da BetaBit em fev/22",
+  "description": "Projeto feito para fixação dos conhecimentos de Typescript e sua integração com Express",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node dist/src",
+    "dev": "nodemon --watch \"src/**\" --ext \"ts,ts\" --ignore\"src/**/*.spec.ts,src/**/*.json\" --exec \"ts-node src/index.ts\""
   },
   "author": "Lucas Costa Quadros",
   "license": "ISC",
@@ -14,12 +14,17 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "express-async-errors": "^3.1.1",
     "http-status-codes": "^2.2.0",
     "joi": "^17.6.0",
     "mysql2": "^2.3.3"
   },
   "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.23",
     "eslint": "^8.9.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.6.3"
   }
 }
