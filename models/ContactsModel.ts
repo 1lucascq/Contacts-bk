@@ -1,7 +1,7 @@
 import { Pool, RowDataPacket, ResultSetHeader } from 'mysql2/promise';
-import { IPhoneNumbers, IFullUser} from '../interfaces/Interfaces';
+import { IContactInfo, IPhoneNumbers, IContactModel} from '../interfaces/Interfaces';
 
-export default class PhBookModel {
+export default class Contacts {
   public connection: Pool;
   constructor(connection: Pool) {
     this.connection = connection;
@@ -15,25 +15,25 @@ export default class PhBookModel {
     }
   };
 
-  public async add(name: string, email: string, image: string, phone: number): Promise<IFullUser> {
+  public async add(name: string, email: string, image: string, phone: number): Promise<IContactModel> {
     try {
       const query = `INSERT INTO contacts (name, email, image) VALUES (?, ?, ?);`;
       const [result] = await this.connection.execute<ResultSetHeader>(query, [name, email, image]);
       const id: number = result.insertId;
       await this.addPhoneNumber(id, phone);
   
-      return { id, name, email, image, phone } as IFullUser;
+      return { id, name, email, image, phone } as IContactModel;
     } catch (err) {
       throw new Error('Erro do servidor na adição de novo contato.');
     }
   };
 
-  public async getAll(): Promise<IFullUser[]> {
+  public async getAll(): Promise<IContactInfo[]> {
     try {
       const query = 'SELECT * FROM contacts'
       const result = await this.connection.execute<RowDataPacket[]>(query);
       const [users] = result;
-      return users as IFullUser[];
+      return users as IContactInfo[];
     } catch (err) {
       throw new Error('Erro do servidor na requisição getAll do model.');
     }
@@ -50,25 +50,25 @@ export default class PhBookModel {
     }
   };
 
-  public async getById(id: number): Promise<IFullUser | null> {
+  public async getById(id: number): Promise<IContactInfo | null> {
     try {
       const query = 'SELECT * FROM contacts WHERE id = ?';
       const [result] = await this.connection.execute<RowDataPacket[]>(query,[id]);
       const [user] = result;
       if (!result.length) return null;
-      return user as IFullUser;
+      return user as IContactInfo;
     } catch (err) {
       throw new Error('Erro do servidor na requisição getByID do model.');
     }
   };
 
-  public async getPhoneNumberById(id: number): Promise<IPhoneNumbers | null> {
+  public async getPhoneNumberById(id: number): Promise<IPhoneNumbers[] | null> {
     try {
       const query = 'SELECT * FROM phone_numbers WHERE contact_id = ?';
       const [result] = await this.connection.execute<RowDataPacket[]>(query, [id]);
       const [phone] = result;
       if (!phone.length) return null;
-      return phone as IPhoneNumbers;
+      return phone as IPhoneNumbers[];
     } catch (err) {
       throw new Error('Erro do servidor na requisição do getPhoneNumberById do model.');
     }
@@ -85,18 +85,18 @@ export default class PhBookModel {
   };
   
   public async update(id: number, name: string, email: string, image: string, phone: number)
-    : Promise<IFullUser> {
+    : Promise<IContactModel> {
     try {
       const query = 'UPDATE contacts SET name = ?, email = ?, image = ? WHERE id = ?;';
       await this.connection.execute(query,[name, email, image, id]);
       await this.updatePhoneNumber(id, phone)
-      return { id, name, email, image, phone } as IFullUser;
+      return { id, name, email, image, phone } as IContactModel;
     } catch (err) {
       throw new Error('Erro do servidor na atualização de contato do model.');
     }
   };
   
-  public async exclude(id: number) {
+  public async exclude(id: number): Promise<IContactModel> {
     try {
       const contact = await this.getById(id);
       if (!contact) throw new Error('404:Id não encontrado! Confira os dados da requisição.');
@@ -109,7 +109,7 @@ export default class PhBookModel {
   
       await this.connection.execute(queryPhone, [id]);
       await this.connection.execute(queryContact, [id]);
-      return contact as IFullUser;
+      return contact as IContactModel;
     } catch (err) {
       throw new Error('Erro do servidor na exclusão de contato do model.');
     }
