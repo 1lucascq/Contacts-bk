@@ -1,7 +1,9 @@
-const Joi = require('joi');
+import { Request, Response, NextFunction } from 'express';
+import { IAddContact } from '../interfaces';
+import Joi from 'joi';
 
-function ValidateData (req, _res, next) {
-  const { name, email, image, phone } = req.body;
+export default function ValidateData (req: Request, _res: Response, next: NextFunction) {
+  const { name, email, image, phone } = req.body as IAddContact;
   
   const { error } = Joi.object({
     name: Joi.string().not().empty().required(),
@@ -14,5 +16,3 @@ function ValidateData (req, _res, next) {
   }
   next()
 };
-
-module.exports = { ValidateData }

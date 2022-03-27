@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import ContactsController from '../controllers/ContactsController';
+import ValidateData from '../middlewares/ValidateData';
 
 const router = Router();
 
