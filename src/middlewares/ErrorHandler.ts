@@ -2,9 +2,6 @@ import Joi from 'joi';
 import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
-const joi = Joi
-
-
 export default function ErrorHandler(err: Joi.Err | any, req: Request, res: Response, _next: NextFunction) {
   if (err.isJoi) {
     console.log(req.body)

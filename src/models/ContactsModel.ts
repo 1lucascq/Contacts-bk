@@ -21,8 +21,6 @@ export default class Contacts {
       const [result] = await this.connection.execute<ResultSetHeader>(query, [name, email, image]);
       const id: number = result.insertId;
       
-      // await this.addPhoneNumber(id, phone);
-  
       return { id, name, email, image } as IContact;
     } catch (err) {
       throw new Error('Erro do servidor na adição de novo contato.');
@@ -32,6 +30,7 @@ export default class Contacts {
   public async getAll(): Promise<IContactInfo[]> {
     try {
       const query = 'SELECT * FROM contacts'
+      console.log('oi')
       const result = await this.connection.execute<RowDataPacket[]>(query);
       const [users] = result;
       return users as IContactInfo[];

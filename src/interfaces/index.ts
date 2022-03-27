@@ -23,19 +23,18 @@ export interface IPhoneNumbers {
 }
 
 /*
-TODO:
-  1. Só da pra adicionar contatos com 1 número de telefone.
-    --> Organizar para que seja possível adicionar contatos com mais de um telefone
-
-  2. Testar
-
-  3. Arrumar todos os IContactModel
-
-
 DB_HOSTNAME=us-cdbr-east-05.cleardb.net
 DB_USER=be99930bd04b0e
 DB_PASSWORD=1dceb3a6
 DB_DATABASE=heroku_d099a20d88f2c75
-DB_PORT=3306
+PORT=3306
+
+
+
+DB_HOSTNAME=localhost
+DB_USERNAME=lucascq
+DB_PASSWORD=12345679
+DB_DATABASE=Phone_Book
+PORT=4000
 
 */
