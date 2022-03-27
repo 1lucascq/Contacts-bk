@@ -7,7 +7,7 @@
     "version": "1.0.1"
   },
   "servers":[
-    { "url": "https://contacts-bk.herokuapp.com/contacts", "description": "API de testes" }
+    { "url": "http://localhost:4001", "description": "API de testes" }
   ],
   "paths": {
     "/contacts": {
@@ -20,9 +20,56 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Contact"
+              },
+              "example": {
+                    "name": "Érick Jacqin",
+                    "email": "com@tompero.br",
+                    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnb9dhCZrcpMmXyS4-06e8ldp7sH8Qy3VTPbhTq_3hXkM46ztjjNex9MHeVtMzpUklt60&usqp=CAU",
+                    "phoneNumbers": [11999331234, 39999334344]
               }
             }
           }
+        },
+        "responses": {
+          "400": {
+            "description": "\"\/campo-vazio/\" is required"
+          },
+          "409": {
+            "description": "You already have a contact with this \"\/name-or-email/\"!'"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }
+          }
+
+        }
+      },
+      "get": {
+        "summary": "Obtém dados dos contatos",
+        "description": "Busca os dados de todos os contatos disponíveis no banco de dados.",
+        "tags": ["Contacts"],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Contact"
+                  }
+                }
+              }
+            }
+          }
+
         }
       }
     }
@@ -44,7 +91,7 @@
           "phoneNumbers": {
             "type": "array",
             "items": {
-              "type": "integer"
+              "type": "number"
             },
             "example": [38999999999, 11999334455]
           }
