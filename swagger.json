@@ -1,0 +1,57 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Contacts API Back-End",
+    "description": "API de consulta e manipulação de contatos salvos em um banco de dados MySQL para consumo de uma aplicação Front-End",
+    "contact": { "name": "Lucas Costa", "email": "1lucascq@gmail.com" },
+    "version": "1.0.1"
+  },
+  "servers":[
+    { "url": "https://contacts-bk.herokuapp.com/contacts", "description": "API de testes" }
+  ],
+  "paths": {
+    "/contacts": {
+      "post": {
+        "summary": "Cadastro de novos contatos",
+        "description": "Cadastra um novo contato passando obrigatoriamente os parâmetros nome, email, imagem e phoneNumbers no corpo da requisição no formato .json",
+        "tags": ["Contacts"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Contact"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Contact": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "Image": {
+            "type": "string"
+          },
+          "phoneNumbers": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "example": [38999999999, 11999334455]
+          }
+        }
+      }
+    }
+  }
+
+
+}
