@@ -10,8 +10,9 @@ function ValidateData(req, _res, next) {
         name: joi_1.default.string().not().empty().required(),
         email: joi_1.default.string().not().empty().required(),
         image: joi_1.default.string().not().empty().required(),
+        phoneNumbers: joi_1.default.array().not().empty().required(),
     })
-        .validate({ name, email, image });
+        .validate({ name, email, image, phoneNumbers });
     if (error) {
         return next(error);
     }

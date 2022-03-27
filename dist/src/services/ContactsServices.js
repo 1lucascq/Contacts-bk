@@ -32,10 +32,10 @@ class ContactsService {
             const allContacts = yield this.getAllContacts();
             const nameAlreadyExists = allContacts.find((contact) => contact.name.toLowerCase() === name.toLowerCase());
             if (nameAlreadyExists)
-                throw new Error('409:Você já possui um contato com este nome!');
+                throw new Error('409:You already have a contact with this name!');
             const emailAlreadyExists = allContacts.find((contact) => contact.email.toLowerCase() === email.toLowerCase());
             if (emailAlreadyExists)
-                throw new Error('409:Você já possui um contato com este email!');
+                throw new Error('409:You already have a contact with this email!');
             return true;
         });
     }

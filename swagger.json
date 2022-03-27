@@ -7,7 +7,7 @@
     "version": "1.0.1"
   },
   "servers":[
-    { "url": "http://localhost:4001", "description": "API de testes" }
+    { "url": "http://contacts-bk.herokuapp.com", "description": "API de testes" }
   ],
   "paths": {
     "/contacts": {

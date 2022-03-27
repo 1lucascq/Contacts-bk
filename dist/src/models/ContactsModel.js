@@ -43,7 +43,6 @@ class Contacts {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const query = 'SELECT * FROM contacts';
-                console.log('oi');
                 const result = yield this.connection.execute(query);
                 const [users] = result;
                 return users;

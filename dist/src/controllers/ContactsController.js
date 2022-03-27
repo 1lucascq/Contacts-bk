@@ -30,7 +30,7 @@ class UserController {
             try {
                 const contact = yield this.contactsService.getById(+req.params.id);
                 if (contact === null) {
-                    return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ message: 'Confira o Id solicitado!' });
+                    return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ message: 'The refereed ID doesn\'t exist!' });
                 }
                 return res.status(200).json(contact);
             }
@@ -62,9 +62,9 @@ class UserController {
             try {
                 const contact = yield this.contactsService.exclude(+req.params.id);
                 if (contact === null) {
-                    return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ message: 'Confira o Id solicitado!' });
+                    return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ message: 'The refereed ID doesn\'t exist!' });
                 }
-                return res.status(http_status_codes_1.StatusCodes.OK).json({ message: 'Contato deletado!' });
+                return res.status(http_status_codes_1.StatusCodes.OK).json({ message: 'Contact deleted!' });
             }
             catch (err) {
                 next(err);
