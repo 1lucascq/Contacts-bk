@@ -1,5 +1,5 @@
 import { Pool, RowDataPacket, ResultSetHeader } from 'mysql2/promise';
-import { IContactInfo, IPhoneNumbers, IContactModel} from '../interfaces/Interfaces';
+import { IContactInfo, IPhoneNumbers, IContactModel} from '../interfaces';
 
 export default class Contacts {
   public connection: Pool;

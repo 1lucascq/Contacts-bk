@@ -31,4 +31,6 @@ TODO:
     --> Organizar para que seja possível adicionar contatos com mais de um telefone
 
   2. Testar
+
+  3. Arrumar todos os IContactModel
 */

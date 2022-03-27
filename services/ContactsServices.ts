@@ -1,9 +1,9 @@
 import ContactsModel from "../models/ContactsModel";
 import connection from '../models/connection';
-import { IPhoneNumbers, IContact, IContactInfo, IAddContact, IContactModel} from '../interfaces/Interfaces';
+import { IPhoneNumbers, IContact, IContactInfo, IAddContact, IContactModel} from '../interfaces';
 
 
-export default class BookService {
+export default class ContactsService {
   public ContactsModel: ContactsModel;
 
   constructor() {
@@ -38,13 +38,6 @@ export default class BookService {
 
   public async getById(id: number): Promise<IContact | null> {
     try {
-
-      // const contacts: IContactInfo[] = await this.ContactsModel.getAll();
-      // const phoneNumbers: IPhoneNumbers[] = await this.ContactsModel.getAllPhoneNumbers();
-      // const fullData = contacts.map((cont) => ({...cont, phoneNumbers: this.getPhoneNumbers(cont.id, phoneNumbers) }));
-      // return fullData as IContact[];
-
-
       const contact: IContactInfo | null = await this.ContactsModel.getById(id);
       if (!contact) return null;
 
