@@ -1,7 +1,7 @@
 {
-  "name": "estagio-betabit",
+  "name": "contacts-bk",
   "version": "1.0.0",
-  "description": "Projeto feito como requisito e inscricao no estagio da BetaBit em fev/22",
+  "description": "Projeto feito para fixação dos conhecimentos de Typescript e sua integração com Express",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

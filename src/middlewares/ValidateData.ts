@@ -3,7 +3,7 @@ import { IAddContact } from '../interfaces';
 import Joi from 'joi';
 
 export default function ValidateData (req: Request, _res: Response, next: NextFunction) {
-  const { name, email, image, phone } = req.body as IAddContact;
+  const { name, email, image, phoneNumbers } = req.body as IAddContact;
   
   const { error } = Joi.object({
     name: Joi.string().not().empty().required(),

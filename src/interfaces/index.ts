@@ -1,3 +1,11 @@
+export interface IAddContact {
+  id?: number
+  name: string;
+  email: string;
+  image: string;
+  phoneNumbers: number[];
+}
+
 export interface IContactInfo {
   id: number;
   name: string;
@@ -5,23 +13,12 @@ export interface IContactInfo {
   image: string;
 }
 
-export interface IPhoneNumbers {
-  contact_id: number;
-  phone: number;
-}
-
-export interface IContactModel extends IContactInfo{
-  phone: number;
-}
-
 export interface IContact extends IContactInfo{
   phoneNumbers: number[];
 }
 
-export interface IAddContact {
-  name: string;
-  email: string;
-  image: string;
+export interface IPhoneNumbers {
+  contact_id: number;
   phone: number;
 }
 
@@ -33,4 +30,12 @@ TODO:
   2. Testar
 
   3. Arrumar todos os IContactModel
+
+
+DB_HOSTNAME=us-cdbr-east-05.cleardb.net
+DB_USER=be99930bd04b0e
+DB_PASSWORD=1dceb3a6
+DB_DATABASE=heroku_d099a20d88f2c75
+DB_PORT=3306
+
 */

@@ -1,6 +1,6 @@
 import ContactsModel from "../models/ContactsModel";
 import connection from '../models/connection';
-import { IPhoneNumbers, IContact, IContactInfo, IAddContact, IContactModel} from '../interfaces';
+import { IPhoneNumbers, IContact, IContactInfo, IAddContact} from '../interfaces';
 
 
 export default class ContactsService {
@@ -9,6 +9,12 @@ export default class ContactsService {
   constructor() {
     this.ContactsModel = new ContactsModel(connection);
   }
+
+  public async addPhones(id: number, phoneNumbers: number[]) {
+    phoneNumbers.forEach(phone => this.ContactsModel.addPhoneNumber(id, phone))
+
+  }
+
   public getPhoneNumbers(id: number, phoneNumbers: IPhoneNumbers[]) {
     return phoneNumbers.filter(({contact_id}) => contact_id === id).map(({phone}) => phone);
   };
@@ -24,6 +30,8 @@ export default class ContactsService {
     return true;
   }
   
+
+
   public async getAllContacts(): Promise<IContact[]> {
     try {
       const contacts: IContactInfo[] = await this.ContactsModel.getAll();
@@ -39,9 +47,12 @@ export default class ContactsService {
   public async getById(id: number): Promise<IContact | null> {
     try {
       const contact: IContactInfo | null = await this.ContactsModel.getById(id);
+      
       if (!contact) return null;
-
+      
       const phoneNumbers = await this.ContactsModel.getPhoneNumberById(id);
+      console.log(phoneNumbers)
+
       if (!phoneNumbers) return null;
 
       const fullData = {...contact, phoneNumbers: phoneNumbers.map(({phone}) => phone) };
@@ -51,27 +62,35 @@ export default class ContactsService {
     }
   }
   
-  // TODO: Melhorar a lógica para que a adição de contatos possa ser feita com mais de um telefone por pessoa.
-  public async add(contactToAdd: IAddContact): Promise<IContactModel> {
+  public async add(contactToAdd: IAddContact): Promise<IContact> {
     try {
-      const { name, email, image, phone } = contactToAdd;
+      const { name, email, image, phoneNumbers } = contactToAdd;
       await this.preventDuplications(name, email)
-      return await this.ContactsModel.add(name, email, image, phone);
+      const addContactRes = await this.ContactsModel.addContact(name, email, image);
+      
+      this.addPhones(addContactRes.id, phoneNumbers)
+      // if (phoneNumbers.length) {
+      //   phoneNumbers.forEach(phone => { this.ContactsModel.addPhoneNumber(addContactRes.id, phone)
+      //   });
+      return { ...addContactRes, phoneNumbers } as IContact
     } catch (error) {
       throw error;
     }
   };
   
-  // TODO: Melhorar a lógica para que a edição de contatos possa ser feita com mais de um telefone por pessoa.
-  public async update(id: number, name: string, email: string, image: string, phone: number): Promise<IContactModel> {
+  public async update(id: number, name: string, email: string, image: string, phoneNumbers: number[]): Promise<IContact> {
     try {
-      return await this.ContactsModel.update(id, name, email, image, phone);
+      await this.ContactsModel.updateContact(id, name, email, image, phoneNumbers);
+
+      const result = await this.getById(id);
+      if (!result) throw new Error('O contato informado para update não existe no banco de dados') ;
+      return result as IContact;
     } catch (error) {
       throw error;
     }
   }
   
-  public async exclude(id: number): Promise<IContactModel | null> {
+  public async exclude(id: number): Promise<IContact | null> {
     try {
       const contact: IContactInfo | null = await this.ContactsModel.getById(id);
       if (!contact) return null;

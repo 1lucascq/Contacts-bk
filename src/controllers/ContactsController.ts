@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import ContactsService from '../services/ContactsServices';
-import { IContact, IContactModel } from '../interfaces';
+import { IContact } from '../interfaces';
 export default class UserController {
   constructor(private contactsService = new ContactsService()) { }
 
   public getAll = async (_req: Request, res: Response, next: NextFunction) => {
     try {
       const contacts: IContact[] = await this.contactsService.getAllContacts();
+
       return res.status(StatusCodes.OK).json(contacts);    
     } catch (err) {
       next(err)
@@ -29,8 +30,8 @@ export default class UserController {
 
   public create = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { name, email, image, phone } = req.body as IContactModel;
-      const newContact: IContactModel = await this.contactsService.add({ name, email, image, phone });
+      const { name, email, image, phoneNumbers } = req.body as IContact;
+      const newContact: IContact = await this.contactsService.add({ name, email, image, phoneNumbers });
       return res.status(StatusCodes.CREATED).json(newContact);
     } catch (err) {
       next(err)
@@ -39,8 +40,8 @@ export default class UserController {
 
   public update = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { name, email, image, phone } = req.body as IContactModel;
-      const contact: IContactModel = await this.contactsService.update(+req.params.id, name, email, image, phone);
+      const { name, email, image, phoneNumbers } = req.body as IContact;
+      const contact: IContact = await this.contactsService.update(+req.params.id, name, email, image, phoneNumbers);
       return res.status(StatusCodes.OK).json(contact);
     } catch (err) {
       next(err)
@@ -49,7 +50,7 @@ export default class UserController {
 
   public destroy = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const contact: IContactModel | null = await this.contactsService.exclude(+req.params.id);
+      const contact: IContact | null = await this.contactsService.exclude(+req.params.id);
       if (contact === null) {
         return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Confira o Id solicitado!' });
       }
