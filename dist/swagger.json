@@ -11,45 +11,6 @@
     ],
     "paths": {
         "/contacts": {
-            "post": {
-                "summary": "Cadastro de um novo contato",
-                "description": "Cadastra um novo contato passando obrigatoriamente os parâmetros nome, email, imagem e phoneNumbers no corpo da requisição no formato .json",
-                "tags": ["Contacts"],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Contact"
-                            },
-                            "example": {
-                                "name": "Érick Jacqin",
-                                "email": "com@tompero.br",
-                                "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnb9dhCZrcpMmXyS4-06e8ldp7sH8Qy3VTPbhTq_3hXkM46ztjjNex9MHeVtMzpUklt60&usqp=CAU",
-                                "phoneNumbers": [11999331234, 39999334344]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "400": {
-                        "description": "\"\/campo-vazio/\" is required"
-                    },
-                    "409": {
-                        "description": "You already have a contact with this \"\/name-or-email/\"!'"
-                    },
-                    "201": {
-                        "description": "Created",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/Contact"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
             "get": {
                 "summary": "Obtém dados dos contato",
                 "description": "Busca os dados de todos os contatos disponíveis no banco de dados.",
@@ -98,53 +59,6 @@
                     },
                     "404": {
                         "description": "The refereed ID doesn't exist!"
-                    }
-                }
-            },
-            "put": {
-                "summary": "Edita um contato",
-                "description": "Realiza a edição de um contato já existente especificado através do id fornecido como parâmetro. O número de telefone deverá ser fornecido no seguinte formato: phoneNumbers: [númeroAntigo, novoNúmero]",
-                "tags": ["Contacts"],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id do contato",
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Contact"
-                            },
-                            "example": {
-                                "name": "Érick Jacqin",
-                                "email": "com@tompero.br",
-                                "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnb9dhCZrcpMmXyS4-06e8ldp7sH8Qy3VTPbhTq_3hXkM46ztjjNex9MHeVtMzpUklt60&usqp=CAU",
-                                "phoneNumbers": [39999334344, 11999338888]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "400": {
-                        "description": "\"\/campo-vazio/\" is required"
-                    },
-                    "404": {
-                        "description": "The refereed ID doesn't exist!"
-                    },
-                    "200": {
-                        "description": "Ok",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/Contact"
-                                }
-                            }
-                        }
                     }
                 }
             },
