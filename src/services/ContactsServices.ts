@@ -22,10 +22,10 @@ export default class ContactsService {
   public async preventDuplications(name: string, email: string): Promise<boolean> {
     const allContacts: IContact[] = await this.getAllContacts();
     const nameAlreadyExists = allContacts.find((contact) => contact.name.toLowerCase() === name.toLowerCase());
-    if (nameAlreadyExists) throw new Error('409:Você já possui um contato com este nome!');
+    if (nameAlreadyExists) throw new Error('409:You already have a contact with this name!');
   
     const emailAlreadyExists = allContacts.find((contact) => contact.email.toLowerCase() === email.toLowerCase());
-    if (emailAlreadyExists) throw new Error('409:Você já possui um contato com este email!');
+    if (emailAlreadyExists) throw new Error('409:You already have a contact with this email!');
     
     return true;
   }
@@ -64,6 +64,7 @@ export default class ContactsService {
   public async add(contactToAdd: IAddContact): Promise<IContact> {
     try {
       const { name, email, image, phoneNumbers } = contactToAdd;
+      console.log(phoneNumbers)
       await this.preventDuplications(name, email)
       const addContactRes = await this.ContactsModel.addContact(name, email, image);
       
