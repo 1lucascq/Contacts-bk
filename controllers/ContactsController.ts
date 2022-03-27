@@ -37,7 +37,7 @@ export default class UserController {
     }  
   };
 
-  public put = async (req: Request, res: Response, next: NextFunction) => {
+  public update = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { name, email, image, phone } = req.body as IContactModel;
       const contact: IContactModel = await this.contactsService.update(+req.params.id, name, email, image, phone);
@@ -47,10 +47,14 @@ export default class UserController {
     }  
   };
 
-  public exclude = async (req: Request, res: Response, next: NextFunction) => {
+  public destroy = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const contact = await this.contactsService.exclude(+req.params.id);
-      return res.status(StatusCodes.OK).json(contact);
+      const contact: IContactModel | null = await this.contactsService.exclude(+req.params.id);
+      if (contact === null) {
+        return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Confira o Id solicitado!' });
+      }
+      
+      return res.status(StatusCodes.OK).json({ message: 'Contato deletado!'});
     } catch (err) {
       next(err)
     }  

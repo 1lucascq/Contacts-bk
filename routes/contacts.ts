@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ContactsController } from '../controllers/ContactsController';
+import ContactsController from '../controllers/ContactsController';
 
 const router = Router();
 
@@ -9,7 +9,7 @@ router.get('/', contactsController.getAll);
 router.get('/:id', contactsController.getById);
 router.post('/', ValidateData, contactsController.create);
 router.put('/:id', ValidateData, contactsController.update);
-router.delete('/:id', contactsController.remove);
+router.delete('/:id', contactsController.destroy);
 
 
 

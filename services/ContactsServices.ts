@@ -71,8 +71,10 @@ export default class ContactsService {
     }
   }
   
-  public async exclude(id: number): Promise<IContactModel> {
+  public async exclude(id: number): Promise<IContactModel | null> {
     try {
+      const contact: IContactInfo | null = await this.ContactsModel.getById(id);
+      if (!contact) return null;
       return await this.ContactsModel.exclude(id);
     } catch (error) {
       throw error;
