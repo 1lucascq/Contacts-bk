@@ -13,7 +13,7 @@ app.use(cors());
 
 app.use(express.json());
 
-app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerDoc))
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 
 app.use("/", router);
 
