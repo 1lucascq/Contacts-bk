@@ -30,7 +30,6 @@ export default class Contacts {
   public async getAll(): Promise<IContactInfo[]> {
     try {
       const query = 'SELECT * FROM contacts'
-      console.log('oi')
       const result = await this.connection.execute<RowDataPacket[]>(query);
       const [users] = result;
       return users as IContactInfo[];

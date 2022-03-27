@@ -64,7 +64,6 @@ export default class ContactsService {
   public async add(contactToAdd: IAddContact): Promise<IContact> {
     try {
       const { name, email, image, phoneNumbers } = contactToAdd;
-      console.log(phoneNumbers)
       await this.preventDuplications(name, email)
       const addContactRes = await this.ContactsModel.addContact(name, email, image);
       

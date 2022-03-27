@@ -19,7 +19,7 @@ export default class UserController {
     try {
       const contact: IContact | null = await this.contactsService.getById(+req.params.id);
       if (contact === null) {
-        return res.status(StatusCodes.BAD_REQUEST).json({ message: 'The refereed ID doesn\'t exist' });
+        return res.status(StatusCodes.NOT_FOUND).json({ message: 'The refereed ID doesn\'t exist!' });
       }
       return res.status(200).json(contact);
     } catch (err) {
@@ -52,10 +52,10 @@ export default class UserController {
     try {
       const contact: IContact | null = await this.contactsService.exclude(+req.params.id);
       if (contact === null) {
-        return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Confira o Id solicitado!' });
+        return res.status(StatusCodes.NOT_FOUND).json({ message: 'The refereed ID doesn\'t exist!' });
       }
       
-      return res.status(StatusCodes.OK).json({ message: 'Contato deletado!'});
+      return res.status(StatusCodes.OK).json({ message: 'Contact deleted!'});
     } catch (err) {
       next(err)
     }  
