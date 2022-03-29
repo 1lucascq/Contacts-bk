@@ -81,7 +81,7 @@ export default class Contacts {
         return;
       }
       const query = 'UPDATE phone_numbers SET phone = ? WHERE contact_id = ?;';
-      await this.connection.execute<ResultSetHeader>(query, [phoneNumbers[1], contactId]);
+      await this.connection.execute<ResultSetHeader>(query, [phoneNumbers[0], contactId]);
       return;
 
     } catch (err) {

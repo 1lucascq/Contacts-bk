@@ -107,7 +107,7 @@ class Contacts {
                     return;
                 }
                 const query = 'UPDATE phone_numbers SET phone = ? WHERE contact_id = ?;';
-                yield this.connection.execute(query, [phoneNumbers[1], contactId]);
+                yield this.connection.execute(query, [phoneNumbers[0], contactId]);
                 return;
             }
             catch (err) {
