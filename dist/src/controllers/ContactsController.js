@@ -30,7 +30,7 @@ class UserController {
             try {
                 const contact = yield this.contactsService.getById(+req.params.id);
                 if (contact === null) {
-                    return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ message: 'Confira o Id solicitado!' });
+                    return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ message: 'The refereed ID doesn\'t exist!' });
                 }
                 return res.status(200).json(contact);
             }
@@ -40,6 +40,7 @@ class UserController {
         });
         this.create = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
+                console.log('Cont.create', req.body);
                 const { name, email, image, phoneNumbers } = req.body;
                 const newContact = yield this.contactsService.add({ name, email, image, phoneNumbers });
                 return res.status(http_status_codes_1.StatusCodes.CREATED).json(newContact);
@@ -50,6 +51,7 @@ class UserController {
         });
         this.update = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
+                console.log('Cont.update: ', req.body);
                 const { name, email, image, phoneNumbers } = req.body;
                 const contact = yield this.contactsService.update(+req.params.id, name, email, image, phoneNumbers);
                 return res.status(http_status_codes_1.StatusCodes.OK).json(contact);
@@ -62,9 +64,9 @@ class UserController {
             try {
                 const contact = yield this.contactsService.exclude(+req.params.id);
                 if (contact === null) {
-                    return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ message: 'Confira o Id solicitado!' });
+                    return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ message: 'The refereed ID doesn\'t exist!' });
                 }
-                return res.status(http_status_codes_1.StatusCodes.OK).json({ message: 'Contato deletado!' });
+                return res.status(http_status_codes_1.StatusCodes.OK).json({ message: 'Contact deleted!' });
             }
             catch (err) {
                 next(err);

@@ -43,7 +43,6 @@ class Contacts {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const query = 'SELECT * FROM contacts';
-                console.log('oi');
                 const result = yield this.connection.execute(query);
                 const [users] = result;
                 return users;
@@ -102,8 +101,14 @@ class Contacts {
     updatePhoneNumber(contactId, phoneNumbers) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const query = 'UPDATE phone_numbers SET phone = ? WHERE contact_id = ? AND phone = ?;';
-                yield this.connection.execute(query, [phoneNumbers[1], contactId, phoneNumbers[0]]);
+                if (phoneNumbers.length > 1) {
+                    const query = 'UPDATE phone_numbers SET phone = ? WHERE contact_id = ? AND phone = ?;';
+                    yield this.connection.execute(query, [phoneNumbers[1], contactId, phoneNumbers[0]]);
+                    return;
+                }
+                const query = 'UPDATE phone_numbers SET phone = ? WHERE contact_id = ?;';
+                yield this.connection.execute(query, [phoneNumbers[0], contactId]);
+                return;
             }
             catch (err) {
                 throw new Error('Erro do servidor na atualização de telefone do model.');
@@ -130,7 +135,7 @@ class Contacts {
             try {
                 const contact = yield this.getById(id);
                 if (!contact)
-                    throw new Error('404:Id não encontrado! Confira os dados da requisição.');
+                    throw new Error('404:Id não encontrado! Confira os dados da isição.');
                 const queryPhone = 'DELETE FROM phone_numbers WHERE contact_id = ?;';
                 const queryContact = 'DELETE FROM contacts WHERE id = ?;';
                 yield this.connection.execute(queryPhone, [id]);

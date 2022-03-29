@@ -19,7 +19,7 @@ export default class UserController {
     try {
       const contact: IContact | null = await this.contactsService.getById(+req.params.id);
       if (contact === null) {
-        return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Confira o Id solicitado!' });
+        return res.status(StatusCodes.NOT_FOUND).json({ message: 'The refereed ID doesn\'t exist!' });
       }
       return res.status(200).json(contact);
     } catch (err) {
@@ -30,6 +30,7 @@ export default class UserController {
 
   public create = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      console.log('Cont.create', req.body);
       const { name, email, image, phoneNumbers } = req.body as IContact;
       const newContact: IContact = await this.contactsService.add({ name, email, image, phoneNumbers });
       return res.status(StatusCodes.CREATED).json(newContact);
@@ -40,6 +41,7 @@ export default class UserController {
 
   public update = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      console.log('Cont.update: ', req.body);
       const { name, email, image, phoneNumbers } = req.body as IContact;
       const contact: IContact = await this.contactsService.update(+req.params.id, name, email, image, phoneNumbers);
       return res.status(StatusCodes.OK).json(contact);
@@ -52,10 +54,10 @@ export default class UserController {
     try {
       const contact: IContact | null = await this.contactsService.exclude(+req.params.id);
       if (contact === null) {
-        return res.status(StatusCodes.BAD_REQUEST).json({ message: 'Confira o Id solicitado!' });
+        return res.status(StatusCodes.NOT_FOUND).json({ message: 'The refereed ID doesn\'t exist!' });
       }
       
-      return res.status(StatusCodes.OK).json({ message: 'Contato deletado!'});
+      return res.status(StatusCodes.OK).json({ message: 'Contact deleted!'});
     } catch (err) {
       next(err)
     }  

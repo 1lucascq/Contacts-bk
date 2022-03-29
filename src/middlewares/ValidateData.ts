@@ -9,8 +9,9 @@ export default function ValidateData (req: Request, _res: Response, next: NextFu
     name: Joi.string().not().empty().required(),
     email: Joi.string().not().empty().required(),
     image: Joi.string().not().empty().required(),
+    phoneNumbers: Joi.array().not().empty().required(),
   })
-    .validate({ name, email, image })
+    .validate({ name, email, image, phoneNumbers })
   if(error) {
     return next(error)
   }

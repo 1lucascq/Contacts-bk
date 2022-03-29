@@ -30,7 +30,6 @@ export default class Contacts {
   public async getAll(): Promise<IContactInfo[]> {
     try {
       const query = 'SELECT * FROM contacts'
-      console.log('oi')
       const result = await this.connection.execute<RowDataPacket[]>(query);
       const [users] = result;
       return users as IContactInfo[];
@@ -76,8 +75,15 @@ export default class Contacts {
   // A implementação aqui é de uma tupla, onde o primeiro item é o novo telefone e o segundo o número antigo a ser alterado.
   public async updatePhoneNumber(contactId: number, phoneNumbers: number[]):Promise<void> {
     try {
-      const query = 'UPDATE phone_numbers SET phone = ? WHERE contact_id = ? AND phone = ?;';
-      await this.connection.execute<ResultSetHeader>(query, [phoneNumbers[1], contactId, phoneNumbers[0]]);
+      if (phoneNumbers.length > 1) {
+        const query = 'UPDATE phone_numbers SET phone = ? WHERE contact_id = ? AND phone = ?;';
+        await this.connection.execute<ResultSetHeader>(query, [phoneNumbers[1], contactId, phoneNumbers[0]]);
+        return;
+      }
+      const query = 'UPDATE phone_numbers SET phone = ? WHERE contact_id = ?;';
+      await this.connection.execute<ResultSetHeader>(query, [phoneNumbers[0], contactId]);
+      return;
+
     } catch (err) {
       throw new Error('Erro do servidor na atualização de telefone do model.');
     }
@@ -100,7 +106,7 @@ export default class Contacts {
   public async exclude(id: number): Promise<IContact> {
     try {
       const contact = await this.getById(id);
-      if (!contact) throw new Error('404:Id não encontrado! Confira os dados da requisição.');
+      if (!contact) throw new Error('404:Id não encontrado! Confira os dados da isição.');
 
       const queryPhone = 'DELETE FROM phone_numbers WHERE contact_id = ?;'
       const queryContact = 'DELETE FROM contacts WHERE id = ?;'
