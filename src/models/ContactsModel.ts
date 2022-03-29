@@ -85,6 +85,8 @@ export default class Contacts {
   public async updateContact(id: number, name: string, email: string, image: string, phoneNumbers: number[])
     : Promise<null> {
     try {
+      console.log('Mod.updateCont: ', id, name, email, image, phoneNumbers);
+
       const query = 'UPDATE contacts SET name = ?, email = ?, image = ? WHERE id = ?;';
       await this.connection.execute(query,[name, email, image, id]);
       
@@ -99,7 +101,7 @@ export default class Contacts {
   public async exclude(id: number): Promise<IContact> {
     try {
       const contact = await this.getById(id);
-      if (!contact) throw new Error('404:Id não encontrado! Confira os dados da requisição.');
+      if (!contact) throw new Error('404:Id não encontrado! Confira os dados da isição.');
 
       const queryPhone = 'DELETE FROM phone_numbers WHERE contact_id = ?;'
       const queryContact = 'DELETE FROM contacts WHERE id = ?;'

@@ -41,7 +41,7 @@ export default class UserController {
 
   public update = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(req.body);
+      console.log('Cont.update: ', req.body);
       const { name, email, image, phoneNumbers } = req.body as IContact;
       const contact: IContact = await this.contactsService.update(+req.params.id, name, email, image, phoneNumbers);
       return res.status(StatusCodes.OK).json(contact);
