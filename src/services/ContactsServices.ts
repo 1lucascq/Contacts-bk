@@ -76,8 +76,6 @@ export default class ContactsService {
   
   public async update(id: number, name: string, email: string, image: string, phoneNumbers: number[]): Promise<IContact> {
     try {
-      console.log('Serv.update: ', id, name, email, image, phoneNumbers);
-
       await this.ContactsModel.updateContact(id, name, email, image, phoneNumbers);
 
       const result = await this.getById(id);

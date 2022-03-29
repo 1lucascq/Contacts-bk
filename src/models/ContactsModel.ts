@@ -92,8 +92,6 @@ export default class Contacts {
   public async updateContact(id: number, name: string, email: string, image: string, phoneNumbers: number[])
     : Promise<null> {
     try {
-      console.log('Mod.updateCont: ', id, name, email, image, phoneNumbers);
-
       const query = 'UPDATE contacts SET name = ?, email = ?, image = ? WHERE id = ?;';
       await this.connection.execute(query,[name, email, image, id]);
       

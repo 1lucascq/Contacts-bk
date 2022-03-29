@@ -30,7 +30,7 @@ export default class UserController {
 
   public create = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(req.body);
+      console.log('Cont.create', req.body);
       const { name, email, image, phoneNumbers } = req.body as IContact;
       const newContact: IContact = await this.contactsService.add({ name, email, image, phoneNumbers });
       return res.status(StatusCodes.CREATED).json(newContact);
