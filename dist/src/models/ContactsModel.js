@@ -119,7 +119,6 @@ class Contacts {
     updateContact(id, name, email, image, phoneNumbers) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log('Mod.updateCont: ', id, name, email, image, phoneNumbers);
                 const query = 'UPDATE contacts SET name = ?, email = ?, image = ? WHERE id = ?;';
                 yield this.connection.execute(query, [name, email, image, id]);
                 yield this.updatePhoneNumber(id, phoneNumbers);

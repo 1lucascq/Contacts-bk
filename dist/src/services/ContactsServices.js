@@ -87,7 +87,6 @@ class ContactsService {
     update(id, name, email, image, phoneNumbers) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log('Serv.update: ', id, name, email, image, phoneNumbers);
                 yield this.ContactsModel.updateContact(id, name, email, image, phoneNumbers);
                 const result = yield this.getById(id);
                 if (!result)
