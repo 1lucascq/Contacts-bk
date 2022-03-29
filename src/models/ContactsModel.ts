@@ -75,8 +75,15 @@ export default class Contacts {
   // A implementação aqui é de uma tupla, onde o primeiro item é o novo telefone e o segundo o número antigo a ser alterado.
   public async updatePhoneNumber(contactId: number, phoneNumbers: number[]):Promise<void> {
     try {
-      const query = 'UPDATE phone_numbers SET phone = ? WHERE contact_id = ? AND phone = ?;';
+      if (phoneNumbers.length > 1) {
+        const query = 'UPDATE phone_numbers SET phone = ? WHERE contact_id = ? AND phone = ?;';
+        await this.connection.execute<ResultSetHeader>(query, [phoneNumbers[1], contactId, phoneNumbers[0]]);
+        return;
+      }
+      const query = 'UPDATE phone_numbers SET phone = ? WHERE contact_id = ?;';
       await this.connection.execute<ResultSetHeader>(query, [phoneNumbers[1], contactId, phoneNumbers[0]]);
+      return;
+
     } catch (err) {
       throw new Error('Erro do servidor na atualização de telefone do model.');
     }
