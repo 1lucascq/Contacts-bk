@@ -30,6 +30,7 @@ export default class UserController {
 
   public create = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      console.log(req.body);
       const { name, email, image, phoneNumbers } = req.body as IContact;
       const newContact: IContact = await this.contactsService.add({ name, email, image, phoneNumbers });
       return res.status(StatusCodes.CREATED).json(newContact);
@@ -40,6 +41,7 @@ export default class UserController {
 
   public update = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      console.log(req.body);
       const { name, email, image, phoneNumbers } = req.body as IContact;
       const contact: IContact = await this.contactsService.update(+req.params.id, name, email, image, phoneNumbers);
       return res.status(StatusCodes.OK).json(contact);
