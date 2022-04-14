@@ -52,7 +52,7 @@
         }
       },
       "get": {
-        "summary": "Obtém dados dos contato",
+        "summary": "Obtém dados dos contatos",
         "description": "Busca os dados de todos os contatos disponíveis no banco de dados.",
         "tags": ["Contacts"],
         "responses": {
